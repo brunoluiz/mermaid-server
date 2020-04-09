@@ -1,0 +1,4 @@
+FROM scratch
+COPY app /
+ENV PORT 80
+ENTRYPOINT ["/app"]
