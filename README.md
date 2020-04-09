@@ -12,8 +12,7 @@
 Use `brew` to install it
 
 ```
-brew tap brunoluiz/tap
-brew install mermaid-server
+brew install brunoluiz/tap/mermaid-server
 ```
 
 ### Linux and Windows
