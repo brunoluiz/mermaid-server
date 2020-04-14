@@ -2,7 +2,7 @@ project_name: 'mermaid-server'
 
 builds:
   - main: './cmd/mermaid-server/main.go'
-    binary: 'app'
+    binary: 'mermaid-server'
     goos: ['linux', 'darwin', 'windows']
     goarch: ['386', 'amd64', 'arm', 'arm64']
     goarm: ['6', '7']
@@ -28,7 +28,7 @@ dockers:
     - 'brunoluiz/mermaid-server:latest'
     dockerfile: 'Dockerfile.prod'
     binaries:
-    - 'app'
+    - 'mermaid-server'
 
 brews:
   - github:

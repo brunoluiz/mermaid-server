@@ -1,4 +1,4 @@
 FROM scratch
-COPY app /
+COPY mermaid-server /
 ENV PORT 80
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["/mermaid-server"]
