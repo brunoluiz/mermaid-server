@@ -43,7 +43,8 @@ COMMANDS:
    help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --address value  server hostname (default: ":3000")
-   --input value    mmd input file
-   --help, -h       show help (default: false)
+   --address value, -a value  server hostname (default: ":7777")
+   --input value, -i value    mmd file path
+   --config value, -c value   mmd config json file path
+   --help, -h                 show help (default: false)
 ```

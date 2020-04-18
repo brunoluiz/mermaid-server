@@ -1,5 +1,7 @@
 package tmpl
 
+import "html/template"
+
 // IndexHTML Index page template
 const IndexHTML = `<!doctype html>
 <!DOCTYPE html>
@@ -17,7 +19,8 @@ const IndexHTML = `<!doctype html>
 	<script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
 	<script>
 		mermaid.initialize({
-			startOnLoad:true
+			startOnLoad:true,
+			...{{ .Config }}
 		});
 
 		// mermaid.parseError = function(err, hash) {
@@ -30,4 +33,5 @@ const IndexHTML = `<!doctype html>
 // IndexHTMLSubs Index page template subs
 type IndexHTMLSubs struct {
 	Content string
+	Config  template.JS
 }

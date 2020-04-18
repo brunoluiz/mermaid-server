@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -19,19 +21,34 @@ func main() {
 		Usage: "⚡️ Serve Mermaid (MMD) files with live reloading",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "address",
-				Value: ":3000",
-				Usage: "server hostname",
+				Name:    "address",
+				Aliases: []string{"a"},
+				Value:   ":7777",
+				Usage:   "server hostname",
 			},
 			&cli.StringFlag{
 				Name:     "input",
+				Aliases:  []string{"i"},
 				Required: true,
-				Usage:    "mmd input file",
+				Usage:    "mmd file path",
+			},
+			&cli.StringFlag{
+				Name:    "config",
+				Aliases: []string{"c"},
+				Usage:   "mmd config json file path",
 			},
 		},
 		Action: func(c *cli.Context) error {
+			var err error
 			input := c.String("input")
 			address := c.String("address")
+			configPath := c.String("config")
+
+			// Load config json file
+			config, err := loadConfig(configPath)
+			if err != nil {
+				return err
+			}
 
 			// Create file watcher
 			watcher, err := fsnotify.NewWatcher()
@@ -65,7 +82,7 @@ func main() {
 
 			// Start serving html
 			http.HandleFunc("/", func(rw http.ResponseWriter, req *http.Request) {
-				dat, err := ioutil.ReadFile(input)
+				mmdDiagram, err := ioutil.ReadFile(input)
 				if err != nil {
 					logrus.Fatal(err)
 				}
@@ -76,7 +93,8 @@ func main() {
 				}
 
 				if err := t.Execute(rw, tmpl.IndexHTMLSubs{
-					Content: string(dat),
+					Content: string(mmdDiagram),
+					Config:  template.JS(config),
 				}); err != nil {
 					logrus.Error(err)
 				}
@@ -91,4 +109,26 @@ func main() {
 	if err := app.Run(os.Args); err != nil {
 		logrus.Fatal(err)
 	}
+}
+
+func loadConfig(configPath string) (string, error) {
+	if configPath == "" {
+		return "{}", nil
+	}
+
+	config, err := ioutil.ReadFile(configPath)
+	if err != nil {
+		return "", err
+	}
+
+	if !isJSON(string(config)) {
+		return "", errors.New(configPath + " is not a valid json")
+	}
+
+	return string(config), nil
+}
+
+func isJSON(str string) bool {
+	var js json.RawMessage
+	return json.Unmarshal([]byte(str), &js) == nil
 }
