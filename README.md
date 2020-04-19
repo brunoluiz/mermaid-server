@@ -25,7 +25,9 @@ The tool is available as a Docker image as well. Please refer to [Docker Hub pag
 
 ### go get
 
-Please avoid using `go get`. [Check our releases](https://github.com/brunoluiz/mermaid-server/releases) for more details.
+Install using `GO111MODULES=off go get github.com/brunoluiz/mermaid-server/cmd/mermaid-server` to get the latest version. This will place it in your `$GOPATH`, enabling it to be used anywhere in the system.
+
+**⚠️ Reminder**: the command above download the contents of master, which might not be the stable version. [Check the releases](https://github.com/brunoluiz/mermaid-server/releases) and get a specific tag for stable versions.
 
 ## Usage
 
