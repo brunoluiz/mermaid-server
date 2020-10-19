@@ -16,7 +16,7 @@ const IndexHTML = `<!doctype html>
 	</div>
 	<div class="error"></div>
 	<script src="http://localhost:35729/livereload.js"></script>
-	<script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+	<script src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
 	<script>
 		mermaid.initialize({
 			startOnLoad:true,
